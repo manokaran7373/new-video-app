@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>Video Call App</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+  </head>
+  <body class="bg-gray-100">
+    <div class="min-h-screen flex items-center justify-center">
+      <div class="bg-white p-8 rounded-lg shadow-lg w-96">
+        <h1 class="text-2xl font-bold mb-6 text-center">Video Call App</h1>
+        <div class="space-y-4">
+          <div>
+            <input
+              type="text"
+              id="username"
+              placeholder="Enter your name"
+              class="w-full p-2 border rounded"
+            />
+          </div>
+          <div class="flex space-x-4">
+            <button
+              onclick="createMeeting()"
+              class="bg-blue-500 text-white px-4 py-2 rounded hover:bg-blue-600 w-1/2"
+            >
+              New Meeting
+            </button>
+            <button
+              onclick="joinMeeting()"
+              class="bg-green-500 text-white px-4 py-2 rounded hover:bg-green-600 w-1/2"
+            >
+              Join Meeting
+            </button>
+          </div>
+          <div>
+            <input
+              type="text"
+              id="meetingId"
+              placeholder="Enter meeting ID"
+              class="w-full p-2 border rounded"
+            />
+          </div>
+        </div>
+      </div>
+    </div>
+    <script>
+      async function createMeeting() {
+        const username = document.getElementById("username").value;
+        if (!username) {
+          alert("Please enter your name");
+          return;
+        }
+        const response = await fetch("/create-meeting");
+        const data = await response.json();
+        window.location.href = `/join/${data.meeting_id}?username=${username}`;
+      }
+
+      function joinMeeting() {
+        const username = document.getElementById("username").value;
+        const meetingId = document.getElementById("meetingId").value;
+        if (!username || !meetingId) {
+          alert("Please enter both name and meeting ID");
+          return;
+        }
+        window.location.href = `/join/${meetingId}?username=${username}`;
+      }
+    </script>
+  </body>
+</html>
