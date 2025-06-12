@@ -175,7 +175,7 @@
         "kind": 2,
         "importPath": "app",
         "description": "app",
-        "peekOfCode": "def handle_message(data):\n    room = data['room']\n    emit('chat_message', {\n        'username': data['username'],\n        'message': data['message']\n    }, room=room)\nif __name__ == '__main__':\n    socketio.run(app, debug=True, allow_unsafe_werkzeug=True)",
+        "peekOfCode": "def handle_message(data):\n    room = data['room']\n    emit('chat_message', {\n        'username': data['username'],\n        'message': data['message']\n    }, room=room)\nif __name__ == '__main__':\n<<<<<<< HEAD\n    socketio.run(app, debug=True, allow_unsafe_werkzeug=True)\n=======",
         "detail": "app",
         "documentation": {}
     },
