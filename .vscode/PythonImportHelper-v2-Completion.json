@@ -1,0 +1,227 @@
+[
+    {
+        "label": "Flask",
+        "importPath": "flask",
+        "description": "flask",
+        "isExtraImport": true,
+        "detail": "flask",
+        "documentation": {}
+    },
+    {
+        "label": "render_template",
+        "importPath": "flask",
+        "description": "flask",
+        "isExtraImport": true,
+        "detail": "flask",
+        "documentation": {}
+    },
+    {
+        "label": "request",
+        "importPath": "flask",
+        "description": "flask",
+        "isExtraImport": true,
+        "detail": "flask",
+        "documentation": {}
+    },
+    {
+        "label": "redirect",
+        "importPath": "flask",
+        "description": "flask",
+        "isExtraImport": true,
+        "detail": "flask",
+        "documentation": {}
+    },
+    {
+        "label": "url_for",
+        "importPath": "flask",
+        "description": "flask",
+        "isExtraImport": true,
+        "detail": "flask",
+        "documentation": {}
+    },
+    {
+        "label": "SocketIO",
+        "importPath": "flask_socketio",
+        "description": "flask_socketio",
+        "isExtraImport": true,
+        "detail": "flask_socketio",
+        "documentation": {}
+    },
+    {
+        "label": "emit",
+        "importPath": "flask_socketio",
+        "description": "flask_socketio",
+        "isExtraImport": true,
+        "detail": "flask_socketio",
+        "documentation": {}
+    },
+    {
+        "label": "join_room",
+        "importPath": "flask_socketio",
+        "description": "flask_socketio",
+        "isExtraImport": true,
+        "detail": "flask_socketio",
+        "documentation": {}
+    },
+    {
+        "label": "leave_room",
+        "importPath": "flask_socketio",
+        "description": "flask_socketio",
+        "isExtraImport": true,
+        "detail": "flask_socketio",
+        "documentation": {}
+    },
+    {
+        "label": "uuid",
+        "kind": 6,
+        "isExtraImport": true,
+        "importPath": "uuid",
+        "description": "uuid",
+        "detail": "uuid",
+        "documentation": {}
+    },
+    {
+        "label": "index",
+        "kind": 2,
+        "importPath": "app",
+        "description": "app",
+        "peekOfCode": "def index():\n    return render_template('home.html')\n@app.route('/create-meeting')\ndef create_meeting():\n    meeting_id = str(uuid.uuid4())\n    rooms[meeting_id] = []\n    return {'meeting_id': meeting_id}\n@app.route('/join/<meeting_id>')\ndef join_meeting(meeting_id):\n    return render_template('meeting.html', meeting_id=meeting_id)",
+        "detail": "app",
+        "documentation": {}
+    },
+    {
+        "label": "create_meeting",
+        "kind": 2,
+        "importPath": "app",
+        "description": "app",
+        "peekOfCode": "def create_meeting():\n    meeting_id = str(uuid.uuid4())\n    rooms[meeting_id] = []\n    return {'meeting_id': meeting_id}\n@app.route('/join/<meeting_id>')\ndef join_meeting(meeting_id):\n    return render_template('meeting.html', meeting_id=meeting_id)\n@socketio.on('connect')\ndef handle_connect():\n    user_connections[request.sid] = None",
+        "detail": "app",
+        "documentation": {}
+    },
+    {
+        "label": "join_meeting",
+        "kind": 2,
+        "importPath": "app",
+        "description": "app",
+        "peekOfCode": "def join_meeting(meeting_id):\n    return render_template('meeting.html', meeting_id=meeting_id)\n@socketio.on('connect')\ndef handle_connect():\n    user_connections[request.sid] = None\n@socketio.on('join')\ndef on_join(data):\n    username = data['username']\n    room = data['room']\n    join_room(room)",
+        "detail": "app",
+        "documentation": {}
+    },
+    {
+        "label": "handle_connect",
+        "kind": 2,
+        "importPath": "app",
+        "description": "app",
+        "peekOfCode": "def handle_connect():\n    user_connections[request.sid] = None\n@socketio.on('join')\ndef on_join(data):\n    username = data['username']\n    room = data['room']\n    join_room(room)\n    user_connections[request.sid] = {'room': room, 'username': username}\n    if room not in rooms:\n        rooms[room] = []",
+        "detail": "app",
+        "documentation": {}
+    },
+    {
+        "label": "on_join",
+        "kind": 2,
+        "importPath": "app",
+        "description": "app",
+        "peekOfCode": "def on_join(data):\n    username = data['username']\n    room = data['room']\n    join_room(room)\n    user_connections[request.sid] = {'room': room, 'username': username}\n    if room not in rooms:\n        rooms[room] = []\n    # Add new user to room\n    rooms[room].append({\n        'username': username,",
+        "detail": "app",
+        "documentation": {}
+    },
+    {
+        "label": "start_call",
+        "kind": 2,
+        "importPath": "app",
+        "description": "app",
+        "peekOfCode": "def start_call(data):\n    room = data['room']\n    target_sid = data['target_sid']\n    emit('call_user', {\n        'offer': data['offer'],\n        'caller': request.sid\n    }, room=target_sid)\n@socketio.on('accept_call')\ndef accept_call(data):\n    caller_sid = data['caller']",
+        "detail": "app",
+        "documentation": {}
+    },
+    {
+        "label": "accept_call",
+        "kind": 2,
+        "importPath": "app",
+        "description": "app",
+        "peekOfCode": "def accept_call(data):\n    caller_sid = data['caller']\n    emit('call_accepted', {\n        'answer': data['answer'],\n        'acceptor': request.sid\n    }, room=caller_sid)\n@socketio.on('ice_candidate')\ndef handle_ice_candidate(data):\n    target_sid = data['target_sid']\n    emit('ice_candidate', {",
+        "detail": "app",
+        "documentation": {}
+    },
+    {
+        "label": "handle_ice_candidate",
+        "kind": 2,
+        "importPath": "app",
+        "description": "app",
+        "peekOfCode": "def handle_ice_candidate(data):\n    target_sid = data['target_sid']\n    emit('ice_candidate', {\n        'candidate': data['candidate'],\n        'sender': request.sid\n    }, room=target_sid)\n@socketio.on('leave')\ndef on_leave(data):\n    username = data['username']\n    room = data['room']",
+        "detail": "app",
+        "documentation": {}
+    },
+    {
+        "label": "on_leave",
+        "kind": 2,
+        "importPath": "app",
+        "description": "app",
+        "peekOfCode": "def on_leave(data):\n    username = data['username']\n    room = data['room']\n    if room in rooms:\n        rooms[room] = [user for user in rooms[room] if user['sid'] != request.sid]\n        leave_room(room)\n        emit('user_left', {\n            'username': username,\n            'sid': request.sid,\n            'users': rooms[room]",
+        "detail": "app",
+        "documentation": {}
+    },
+    {
+        "label": "handle_disconnect",
+        "kind": 2,
+        "importPath": "app",
+        "description": "app",
+        "peekOfCode": "def handle_disconnect():\n    if request.sid in user_connections:\n        user_data = user_connections[request.sid]\n        if user_data:\n            room = user_data['room']\n            username = user_data['username']\n            if room in rooms:\n                rooms[room] = [user for user in rooms[room] if user['sid'] != request.sid]\n                emit('user_left', {\n                    'username': username,",
+        "detail": "app",
+        "documentation": {}
+    },
+    {
+        "label": "handle_message",
+        "kind": 2,
+        "importPath": "app",
+        "description": "app",
+        "peekOfCode": "def handle_message(data):\n    room = data['room']\n    emit('chat_message', {\n        'username': data['username'],\n        'message': data['message']\n    }, room=room)\nif __name__ == '__main__':\n    socketio.run(app, debug=True, allow_unsafe_werkzeug=True)",
+        "detail": "app",
+        "documentation": {}
+    },
+    {
+        "label": "app",
+        "kind": 5,
+        "importPath": "app",
+        "description": "app",
+        "peekOfCode": "app = Flask(__name__)\napp.config['SECRET_KEY'] = 'secret!'\nsocketio = SocketIO(app, cors_allowed_origins=\"*\")\n# Store active rooms and their participants\nrooms = {}\n# Store user connections\nuser_connections = {}\n@app.route('/')\ndef index():\n    return render_template('home.html')",
+        "detail": "app",
+        "documentation": {}
+    },
+    {
+        "label": "app.config['SECRET_KEY']",
+        "kind": 5,
+        "importPath": "app",
+        "description": "app",
+        "peekOfCode": "app.config['SECRET_KEY'] = 'secret!'\nsocketio = SocketIO(app, cors_allowed_origins=\"*\")\n# Store active rooms and their participants\nrooms = {}\n# Store user connections\nuser_connections = {}\n@app.route('/')\ndef index():\n    return render_template('home.html')\n@app.route('/create-meeting')",
+        "detail": "app",
+        "documentation": {}
+    },
+    {
+        "label": "socketio",
+        "kind": 5,
+        "importPath": "app",
+        "description": "app",
+        "peekOfCode": "socketio = SocketIO(app, cors_allowed_origins=\"*\")\n# Store active rooms and their participants\nrooms = {}\n# Store user connections\nuser_connections = {}\n@app.route('/')\ndef index():\n    return render_template('home.html')\n@app.route('/create-meeting')\ndef create_meeting():",
+        "detail": "app",
+        "documentation": {}
+    },
+    {
+        "label": "rooms",
+        "kind": 5,
+        "importPath": "app",
+        "description": "app",
+        "peekOfCode": "rooms = {}\n# Store user connections\nuser_connections = {}\n@app.route('/')\ndef index():\n    return render_template('home.html')\n@app.route('/create-meeting')\ndef create_meeting():\n    meeting_id = str(uuid.uuid4())\n    rooms[meeting_id] = []",
+        "detail": "app",
+        "documentation": {}
+    },
+    {
+        "label": "user_connections",
+        "kind": 5,
+        "importPath": "app",
+        "description": "app",
+        "peekOfCode": "user_connections = {}\n@app.route('/')\ndef index():\n    return render_template('home.html')\n@app.route('/create-meeting')\ndef create_meeting():\n    meeting_id = str(uuid.uuid4())\n    rooms[meeting_id] = []\n    return {'meeting_id': meeting_id}\n@app.route('/join/<meeting_id>')",
+        "detail": "app",
+        "documentation": {}
+    }
+]
