@@ -130,8 +130,4 @@ def handle_message(data):
     }, room=room)
 
 if __name__ == '__main__':
-<<<<<<< HEAD
-    socketio.run(app, debug=True, allow_unsafe_werkzeug=True)
-=======
     socketio.run(app, host='0.0.0.0', port=5000, debug=True,allow_unsafe_werkzeug=True)
->>>>>>> d3378ebcf990e7d15539a60250095b135a01239f
